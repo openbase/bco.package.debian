@@ -42,7 +42,7 @@ ARCHITECTURE=all,mips,armhf,arm64,armel,i386,amd64
 TARGET_URL="${BINTRAY_REPO}/$VERSION/${FILE_TARGET_PATH};deb_distribution=${DISTRIBUTION};deb_component=${COMPONENT};deb_architecture=${ARCHITECTURE};publish=${PUBLISH};override=${OVERRIDE}"
 echo -e "=== ${APP_NAME} project ${WHITE}upload${NC}" &&
   RESULT=$(curl -s -T "${SOURCE_FILE_PATH}" -u${DEPLOY_USER}:${API_KEY} "${TARGET_URL}")
-if [[ "$RESULT" == "{"message":"success"}" ]]; then
+if [[ "$RESULT" == '{"message":"success"}' ]]; then
   echo -e "\n=== ${APP_NAME} was ${GREEN}successfully${NC} build to ${WHITE}${prefix}${NC}"
   exit 0
 else
