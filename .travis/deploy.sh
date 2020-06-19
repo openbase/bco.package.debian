@@ -21,8 +21,8 @@ VERSION=$(grep -A1 "<artifactId>bco<" pom.xml | grep -Po '(?<=    <version>).*(?
 SOURCE_FILE_PATH=$(echo target/bco*.deb)
 DEB_FILENAME=${SOURCE_FILE_PATH:7}
 if [[ "${VERSION:(-8)}" == "SNAPSHOT" ]]; then
-  SNAPSHOT_VERSION=${VERSION:0:(-9)}
-  DESCRIPTION="The experimental alpha prerelease of bco ${SNAPSHOT_VERSION}"
+  VERSION=${VERSION:0:(-9)}
+  DESCRIPTION="The experimental alpha prerelease of bco ${VERSION}"
   COMPONENT=unstable,testing
   FILE_TARGET_PATH=pool/unstable/b/bco/${DEB_FILENAME}
 else
