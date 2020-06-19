@@ -79,10 +79,25 @@ jobs:
         echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
         if [[ ($TRAVIS_BRANCH == master) &&
               ($TRAVIS_PULL_REQUEST == false) ]] ; then
-          curl -LO --retry 3 https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
 
-          # trigger upstream projects
-          for PROJECT in ${UPSTREAM_PROJECTS}; do
-              sh trigger-travis.sh openbase ${PROJECT} $TRAVIS_ACCESS_TOKEN
-          done
+          # trigger upstream projects if declared.
+          if [ -z ${UPSTREAM_PROJECTS+x} ]; then
+              echo "skip upstream trigger since no upstream projects are declared for this project.";
+          else 
+              curl -LO --retry 3 https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+
+              # trigger upstream projects
+              for PROJECT in ${UPSTREAM_PROJECTS}; do
+                  sh trigger-travis.sh openbase ${PROJECT} $TRAVIS_ACCESS_TOKEN
+              done
+          fi
+          # trigger post request
+          if [ -z ${POST_REQUEST+x} ]; then
+              echo "skip post requests since non are declared for this project.";
+          else 
+              # trigger post actions
+              for REQUEST in ${POST_REQUEST}; do
+                  curl -X POST ${REQUEST}
+              done
+          fi
         fi
