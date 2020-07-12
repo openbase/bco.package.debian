@@ -43,10 +43,10 @@ TARGET_URL="${BINTRAY_REPO}/$VERSION/${FILE_TARGET_PATH};deb_distribution=${DIST
 echo -e "=== ${APP_NAME} project ${WHITE}upload${NC}" &&
   RESULT=$(curl -s -T "${SOURCE_FILE_PATH}" -u${DEPLOY_USER}:${API_KEY} "${TARGET_URL}")
 if [[ "$RESULT" == '{"message":"success"}' ]]; then
-  echo -e "\n=== ${APP_NAME} was ${GREEN}successfully${NC} build to ${WHITE}${prefix}${NC}"
+  echo -e "\n=== ${APP_NAME} ${$VERSION} upload to ${WHITE}${TARGET_URL}${NC} ${GREEN}successful${NC}"
   exit 0
 else
-  echo -e "\n=== ${APP_NAME} ${RED}error${NC} uploading to ${WHITE}${TARGET_URL}${NC}"
+  echo -e "\n=== ${APP_NAME} upload to ${WHITE}${TARGET_URL}${NC} ${RED}failed!${NC}"
   echo -e "\n=== ${RED}ERROR:${NC} ${RESULT}"
   exit 1
 fi
