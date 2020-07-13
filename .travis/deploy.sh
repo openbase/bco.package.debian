@@ -28,11 +28,15 @@ DEB_FILENAME=${SOURCE_FILE_PATH:7}
 if [[ "${VERSION:(-8)}" == "SNAPSHOT" ]]; then
   VERSION=${VERSION:0:(-9)}
   DESCRIPTION="The experimental alpha prerelease of bco ${VERSION}"
-  COMPONENT=unstable,testing
+  # it looks like there is only a single component value supported.
+  #COMPONENT=unstable,testing
+  COMPONENT=testing
   FILE_TARGET_PATH=pool/unstable/b/bco/${DEB_FILENAME}
 else
   DESCRIPTION="The release of bco ${VERSION}"
-  COMPONENT=main,free,unstable,testing
+  # it looks like there is only a single component value supported.
+  #COMPONENT=main,free,unstable,testing
+  COMPONENT=main
   FILE_TARGET_PATH=pool/main/b/bco/${DEB_FILENAME}
 fi
 SCM=https://github.com/openbase/bco.git
