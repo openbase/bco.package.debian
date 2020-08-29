@@ -2,4 +2,5 @@
 # make sure this is compatible with the docker were the bco user need to provide a specific uid
 #adduser --system bco
 
+mkdir -p /var/log/bco
 chmod -R 777 /var/log/bco
