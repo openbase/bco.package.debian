@@ -1,21 +1,37 @@
 <configuration>
+
+    <conversionRule conversionWord="messageHighlighting" converterClass="org.openbase.log.OpenBaseLogbackMessageColorTheme" />
+    <conversionRule conversionWord="loggerHighlighting" converterClass="org.openbase.log.OpenBaseLogbackLoggerColorTheme" />
+
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGGER_TARGET_DIR}/${APPLICATION_NAME}-${SUBMODULE_NAME}.log</file>
+        <file>${LOGGER_TARGET_DIR}/${APPLICATION_NAME}${MODULE_SEPARATOR}${SUBMODULE_NAME}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>${LOGGER_TARGET_DIR}/${APPLICATION_NAME}-${SUBMODULE_NAME}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>${LOGGER_TARGET_DIR}/${APPLICATION_NAME}${MODULE_SEPARATOR}${SUBMODULE_NAME}.%d{yyyy-MM-dd}.gz</fileNamePattern>
 
-            <!-- keep 30 days' worth of history capped at 3GB total size -->
+            <!-- keep 30 days' worth of history capped at 1GB total size -->
             <maxHistory>30</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
 
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{15} %msg%n</pattern>
+            <pattern>%d [%thread] %5level %logger{15} %msg%n</pattern>
         </encoder>
-    </appender> 
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- On Windows machines setting withJansi to true enables ANSI
+        color code interpretation by the Jansi library. This requires
+        org.fusesource.jansi:jansi:1.8 on the class path.  Note that
+        Unix-based operating systems such as Linux and Mac OS X
+        support ANSI color codes by default. -->
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%d{HH:mm:ss} %loggerHighlighting(%5level) %cyan(%property{APPLICATION_NAME}%property{MODULE_SEPARATOR}%property{SUBMODULE_NAME}) %messageHighlighting(%msg%n)</pattern>
+        </encoder>
+    </appender>
 
     <root level="INFO">
         <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
     </root>
 </configuration>
