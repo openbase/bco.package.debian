@@ -1,11 +1,6 @@
 #!/bin/bash
 set -e
 
-######## remove me later
-mvn install
-########################
-
-
 NC='\033[0m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
